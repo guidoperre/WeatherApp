@@ -1,104 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="clickHandler" type="com.guido.weatherapp.ui.MainActivity.ClickHandler"/>
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/search_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/hor_guideline_15"
-        app:layout_constraintEnd_toStartOf="@+id/ver_guideline_90"
-        app:layout_constraintStart_toStartOf="@+id/ver_guideline_10">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        tools:context=".ui.MainActivity">
 
-        <TextView
-            android:id="@+id/search_text"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/rounded_white_background"
-            android:elevation="5dp"
-            android:fontFamily="@font/quicksand_medium"
-            android:gravity="center|start"
-            android:paddingStart="15dp"
-            android:text="@string/search_text"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="RtlSymmetry" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/search_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            app:cardCornerRadius="25dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{() -> clickHandler.goToSearch()}"
+            app:layout_constraintBottom_toTopOf="@+id/hor_guideline_15"
+            app:layout_constraintEnd_toStartOf="@+id/ver_guideline_90"
+            app:layout_constraintStart_toStartOf="@+id/ver_guideline_10">
 
-        <ImageView
-            android:layout_width="30dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/search_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/rounded_white_background"
+                    android:fontFamily="@font/quicksand_medium"
+                    android:gravity="center|start"
+                    android:paddingStart="15dp"
+                    android:text="@string/search_text"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="RtlSymmetry" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="20dp"
+                    android:contentDescription="@string/content_description"
+                    android:src="@mipmap/ic_google_foreground"
+                    app:layout_constraintBottom_toBottomOf="@+id/search_text"
+                    app:layout_constraintEnd_toEndOf="@+id/search_text"
+                    app:layout_constraintTop_toTopOf="@+id/search_text" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="20dp"
-            android:contentDescription="@string/content_description"
-            android:elevation="5dp"
-            android:src="@mipmap/ic_google_foreground"
-            app:layout_constraintBottom_toBottomOf="@+id/search_text"
-            app:layout_constraintEnd_toEndOf="@+id/search_text"
-            app:layout_constraintTop_toTopOf="@+id/search_text" />
+            android:background="@drawable/rounded_white_background"
+            android:elevation="10dp"
+            app:cardCornerRadius="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/hor_guideline_95"
+            app:layout_constraintEnd_toStartOf="@+id/ver_guideline_90"
+            app:layout_constraintStart_toStartOf="@+id/ver_guideline_10"
+            app:layout_constraintTop_toTopOf="@+id/hor_guideline_20">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/places_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                tools:listitem="@layout/place_item_layout" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nothing_for_now"
+                android:fontFamily="@font/quicksand_light"
+                android:gravity="center|start"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                android:layout_gravity="center"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/hor_guideline_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.13" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/hor_guideline_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.20" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/hor_guideline_95"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ver_guideline_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ver_guideline_90"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/rounded_white_background"
-        android:elevation="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/hor_guideline_95"
-        app:layout_constraintEnd_toStartOf="@+id/ver_guideline_90"
-        app:layout_constraintStart_toStartOf="@+id/ver_guideline_10"
-        app:layout_constraintTop_toTopOf="@+id/hor_guideline_20">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/places_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:elevation="5dp"
-            tools:listitem="@layout/place_item_layout" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/hor_guideline_15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.13" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/hor_guideline_20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.20" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/hor_guideline_95"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/ver_guideline_10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.1" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/ver_guideline_90"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
