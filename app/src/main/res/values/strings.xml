@@ -6,7 +6,7 @@
     <string name="max_temp">Max. Temp.</string>
     <string name="humidity">Humidity</string>
     <string name="pressure">Pressure</string>
-    <string name="feels_like">Feels like</string>
     <string name="title_activity_weather">Map</string>
     <string name="nothing_for_now">Nothing for now</string>
+    <string name="waiting">Waiting</string>
 </resources>

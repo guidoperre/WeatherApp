@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -15,7 +14,10 @@ import com.guido.weatherapp.R
 import com.guido.weatherapp.adapters.SearchAdapter
 import com.guido.weatherapp.databinding.ActivitySearchBinding
 import com.guido.weatherapp.models.AutoSuggest
-import com.guido.weatherapp.ui.MainActivity
+import com.guido.weatherapp.models.Place
+import com.guido.weatherapp.repository.PlaceRepository
+import com.guido.weatherapp.ui.main.MainActivity
+import com.guido.weatherapp.ui.weather.WeatherActivity
 
 class SearchActivity : AppCompatActivity() {
 
@@ -60,7 +62,7 @@ class SearchActivity : AppCompatActivity() {
         if (query != "") {
             adapter.setLoading(AutoSuggest("loading",""))
             isTextEmptyFlag = false
-            runnable = Runnable { model.get(query) }
+            runnable = Runnable { model.callSuggest(query) }
             handler.postDelayed(runnable!!, 500)
         } else
             isTextEmptyFlag = true
@@ -70,6 +72,20 @@ class SearchActivity : AppCompatActivity() {
         model = SearchViewModel()
         model.getSuggest().observe(this, androidx.lifecycle.Observer {
           updateSuggestions(it)
+        })
+        model.getGeocode().observe(this,androidx.lifecycle.Observer {
+            //Add to database
+            PlaceRepository(application).insert(Place(0L,it.address.label,it.geocode))
+
+            //Go to weather activity
+            val intent = Intent(this, WeatherActivity::class.java)
+
+            intent.putExtra("address",it.address.label)
+            intent.putExtra("latitude",it.geocode.latitude)
+            intent.putExtra("longitude",it.geocode.longitude)
+
+            startActivity(intent)
+            overridePendingTransition(R.transition.fade_in, R.transition.fade_out)
         })
     }
 
@@ -87,7 +103,8 @@ class SearchActivity : AppCompatActivity() {
         adapter = SearchAdapter(object : SearchAdapter.OnItemClickListener{
             override fun onItemClick(suggest: AutoSuggest, position: Int) {
                 model.cancelAsyncTasks()
-                Toast.makeText(applicationContext,"Se clickeo " + suggest.label + " position" + position,Toast.LENGTH_LONG).show()
+                //Call geocode api
+                model.callGeocode(suggest.locationId)
             }
         })
     }

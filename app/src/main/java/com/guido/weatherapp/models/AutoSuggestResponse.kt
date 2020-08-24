@@ -7,5 +7,4 @@ class AutoSuggestResponse (
     @field:SerializedName("suggestions")
     @field:Expose
     var response: List<AutoSuggest>
-
 )

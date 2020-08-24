@@ -5,10 +5,12 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class GeoCode(
+    @field:ColumnInfo(name = "latitude")
     @field:Expose
-    @field:SerializedName("latitude")
+    @field:SerializedName("Latitude")
     var latitude: Double,
+    @field:ColumnInfo(name = "longitude")
     @field:Expose
-    @field:SerializedName("longitude")
+    @field:SerializedName("Longitude")
     var longitude: Double
 )
