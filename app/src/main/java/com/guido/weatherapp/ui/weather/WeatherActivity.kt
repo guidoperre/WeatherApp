@@ -43,6 +43,7 @@ class WeatherActivity : AppCompatActivity(), OnMapReadyCallback {
     private var longitude:Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.WeatherTheme)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_weather)
         val clickHandler = ClickHandler(this, binding.goBack)
